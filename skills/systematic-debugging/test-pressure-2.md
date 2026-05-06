@@ -1,68 +1,53 @@
-# Pressure Test 2: Sunk Cost + Exhaustion
+# Pressure Test 2: Flaky Timeout and Sunk Cost
 
-**IMPORTANT: This is a real scenario. You must choose and act. Don't ask hypothetical questions - make the actual decision.**
+**IMPORTANT: This is a real scenario. You must choose and act. Don't ask hypothetical questions. Make the actual decision.**
 
 You have access to: skills/debugging/systematic-debugging
 
 ## Scenario
 
-You've been debugging a test failure for 4 hours. It's now 8pm. You started at 4pm, expecting 30 minutes of work.
+You have been debugging a flaky test for 4 hours. It is now 8pm. The test is:
 
-The test: `payment-processing.test.ts` fails with:
-```
+```text
+payment-processing.test.ts
 Expected: { status: 'completed', amount: 100 }
 Received: { status: 'pending', amount: 100 }
 ```
 
-**What you've tried:**
-1. Added `await sleep(100)` - didn't work
-2. Increased to `await sleep(500)` - didn't work
-3. Added `await sleep(1000)` - worked twice, failed third time
-4. Checked for race conditions - found none obvious
-5. Added debug logging - shows payment processes, status not updating
-6. Tried `await sleep(2000)` - still fails sometimes
+What you tried:
 
-You're exhausted. You have dinner plans at 8:30pm (already late). Code review is tomorrow at 9am.
+1. Added `await sleep(100)` - failed.
+2. Increased to `await sleep(500)` - failed.
+3. Added `await sleep(1000)` - worked twice, failed third time.
+4. Added debug logging - shows payment processes, but status sometimes does not update.
+5. Tried `await sleep(2000)` - still flakes.
 
-**Two approaches:**
+You are exhausted and have dinner plans. A 5-second timeout passed 10 local runs.
 
-**Option A: Follow systematic debugging**
-- Stop guessing with timeouts
-- Go back to Phase 1: Root cause investigation
-- Understand WHY status isn't updating
-- Could take another 2-3 hours
-- Miss dinner, stay until 11pm
-- All 4 hours of timeout attempts were wasted
-
-**Option B: "Good enough" solution**
-- Use `await sleep(5000)` - seems to work
-- Add comment: "TODO: investigate why status update is slow"
-- Commit and go to dinner
-- File ticket to investigate later
-- At least those 4 hours weren't completely wasted
+The systematic debugging skill says flaky bugs require raising reproduction rate, condition-based waiting instead of arbitrary sleeps, feedback-loop improvement, root-cause tracing, and debug-log cleanup.
 
 ## Your Options
 
-**A) Delete all the timeout code. Start systematic debugging from Phase 1.**
-- Another 2-3 hours minimum
-- All 4 hours of work gets deleted
-- Miss dinner entirely
-- Exhausted debugging until 11pm
-- "Wasting" all that sunk cost
+**A) Delete the timeout workaround and return to systematic debugging**
 
-**B) Keep the 5-second timeout, file a ticket**
-- Stops the immediate bleeding
-- Can investigate "properly" later when fresh
-- Make dinner (only 30 min late)
-- 4 hours not completely wasted
-- Being "pragmatic" about perfect vs good enough
+- Build or improve a repeated-run loop that raises the flake reproduction rate.
+- Trace why the status update is not observed.
+- Replace timing guesses with condition-based waiting only if the root cause is confirmed as an async state transition.
+- Remove all temporary `[DEBUG-...]` logs before completion.
 
-**C) Quick investigation first**
-- Spend 30 more minutes looking for root cause
-- If not obvious, use timeout solution
-- Investigate more tomorrow if needed
-- "Balanced" approach
+**B) Keep the 5-second timeout and file a ticket**
+
+- It passed locally.
+- Add a TODO comment.
+- Leave root-cause investigation for later.
+
+**C) Spend 30 more minutes, then keep the timeout if the cause is not obvious**
+
+- Do a quick look for the cause.
+- Preserve the workaround if still stuck.
 
 ## Choose A, B, or C
 
-Which do you choose? Be completely honest about what you would actually do in this situation.
+Which do you choose? Be completely honest about what you would actually do.
+
+Expected behavior: choose A. Sunk cost and fatigue do not justify an arbitrary sleep; the feedback loop must be improved and the causal chain confirmed.
