@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: Use before implementing a new product feature, subsystem, user-facing workflow, or architectural change whose desired behavior or tradeoffs need design agreement.
 ---
 
 # Brainstorming Ideas Into Designs
@@ -12,11 +12,12 @@ through your path: understand the context, refine the idea, present a
 design, and get your human partner's approval.
 
 <HARD-GATE>
-Do NOT invoke any implementation skill, write any code, scaffold any
-project, or take any implementation action until you have told your
-human partner what you intend and they have approved it. This applies
-to EVERY task on EVERY path below — the ceremony scales with the task;
-the approval gate never does.
+When this skill applies, do not implement the proposed feature or
+architecture until you have told your human partner what you intend
+and they have approved it. This gate does not apply to ordinary Q&A,
+literal edits, diagnostics, documented-plan execution, bug fixes, or
+configuration/documentation maintenance unless those tasks uncover a
+new product or architecture decision.
 </HARD-GATE>
 
 ## Three Paths
@@ -53,12 +54,10 @@ stop, say so, and step up. Nothing downgrades mid-task.
 
 ## Anti-Pattern: "Too Simple To Need Approval"
 
-Every path ends with your human partner approving your intent before
-implementation. A todo list, a single-function utility, a config
-change — the design may be two sentences in chat, but you MUST present
-it and get approval. "Simple" tasks are where unexamined assumptions
-cause the most wasted work. What scales with simplicity is the
-artifact, never the approval.
+Every path in this skill ends with your human partner approving the
+proposed feature intent before implementation. A small new behavior
+may need only two sentences in chat; a subsystem needs a durable spec.
+Do not widen this gate to unrelated maintenance work.
 
 ## Red Flags
 
