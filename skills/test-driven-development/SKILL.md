@@ -46,4 +46,4 @@ Do not delete otherwise valid working code merely because the test was added lat
 - Relevant broader verification passes.
 - Temporary diagnostics and test-only shortcuts are removed.
 
-See `writing-good-tests.md` and `testing-anti-patterns.md` only when test design or mocking is the difficult part.
+See `writing-good-tests.md` only when test design or mocking is the difficult part.

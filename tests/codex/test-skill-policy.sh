@@ -15,3 +15,10 @@ if rg -q '1% chance|before ANY response|EVERY task|NO production code|Delete mea
   echo 'over-broad skill policy remains' >&2
   exit 1
 fi
+
+for reference in $(rg -o '`[^`]+\.md`' "$tdd_skill" | tr -d '`' | sort -u); do
+  if [[ ! -f "$(dirname "$tdd_skill")/$reference" ]]; then
+    echo "missing TDD skill reference: $reference" >&2
+    exit 1
+  fi
+done
